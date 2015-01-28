@@ -1,0 +1,16 @@
+{
+	"name": "facets-downloader",
+	"description": "Downloads all 365 facet.la images",
+  	"author": {
+    		"name": "Austin Kelleher",
+    		"email": "a@alk.im"
+  	},
+  	"keywords": [
+		"facet"
+	],
+	"dependencies": {
+		"cheerio": "0.18",
+		"request": "2.51.0"
+	}
+}
+
