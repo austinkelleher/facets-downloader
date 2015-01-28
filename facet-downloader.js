@@ -16,8 +16,6 @@ var baseUri = 'http://www.facets.la/';
 	var uri = baseUri + year + '/' + id + '/';
 
 	request({ uri: uri }, function(error, response, body) {
-		if(id == 330) year = "2014";
-
 		var $ = cheerio.load(body);
 		var imgDiv = $('#facet-image').children()['0'];
 
@@ -26,6 +24,8 @@ var baseUri = 'http://www.facets.la/';
 		}
 	});
 
+	if(id == 330) 
+		year = "2014";
 	if(id <= 365)
 		getImg(id+1);
 })(1);
