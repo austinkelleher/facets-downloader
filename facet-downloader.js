@@ -24,7 +24,8 @@ var baseUri = 'http://www.facets.la/';
 		if(typeof imgDiv !== 'undefined') {
 			request(imgDiv.attribs.src).pipe(fs.createWriteStream(savePath + id + '.jpg'));
 		}
-
-		getImg(id+1);
 	});
+
+	if(id <= 365)
+		getImg(id+1);
 })(1);
