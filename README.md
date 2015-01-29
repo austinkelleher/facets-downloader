@@ -1,6 +1,6 @@
-facet-downloader
+facets-downloader
 =========
 
-To download all 365 facet.la images, simply run:
+To download all 365 facets.la images, simply run:
 	
-	node facet-downloader.js LOCAL_SAVE_PATH_HERE
+	node facets-downloader.js LOCAL_SAVE_PATH_HERE
