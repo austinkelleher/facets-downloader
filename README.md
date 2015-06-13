@@ -14,8 +14,3 @@ facets-downloader
 3. Run <br>	
 
 > node facets-downloader.js LOCAL_SAVE_PATH_HERE
-
-
-
-	
-
