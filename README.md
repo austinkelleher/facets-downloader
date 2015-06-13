@@ -3,15 +3,15 @@ facets-downloader
 
 ##Instructions
 
-Download Node.js<br>
+#1.Download Node.js<br>
 
 > https://nodejs.org/download/
 
-Install request and cheerio modules<br>
+#2.Install request and cheerio modules<br>
 
 > npm install request cheerio
 
-Run <br>	
+#3.Run <br>	
 
 > node facets-downloader.js LOCAL_SAVE_PATH_HERE
 
