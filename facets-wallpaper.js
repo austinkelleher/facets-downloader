@@ -1,35 +1,43 @@
+//Required modules
 var fs = require('fs'),
-    request = require('request'),
-	async = require("async");
+		 cheerio = require('cheerio'),
+		 request = require('request');
 
-var baseURI =  'http://www.facets.la/wallpaper/W_';
+//Default Variables
+var baseURI =  'http://www.facets.la/';
 var year = 2013;
 var id = 1;
-var savePath = process.argv[2];
-	
-var download = function(uri, savePath, callback){
-	if(id == 330) 
-		year = "2014";
-  request.head(uri, function(err, res, body){
-	console.log('Downloading '+id);
-    //console.log('content-type:', res.headers['content-type']);
-    console.log('content-length:', res.headers['content-length']);
-	if(typeof res.headers['content-length'] !== "undefined"){
-    request(uri).pipe(fs.createWriteStream(savePath)).on('close', callback);
-	if(id++ <= 365){
-		download(baseURI+year+'_'+id+'.jpg', savePath+id+'.jpg', function(){
-		//console.log('done');
-		});}
-	}
-	else{
-		if(id++ <= 365){
-		download(baseURI+year+'_'+id+'.jpg', savePath+id+'.jpg', function(){
-		//console.log('done');
-		});}
-		}
-  });
+var savePath = process.argv[2];	
+
+//Download Function
+var download = function(uri, filename, callback){	
+	request({ uri: uri }, function(err, res, body){    
+		var $ = cheerio.load(body);
+		var imgDiv = $('#facet-wallpaper').children()['0'];
+		if(err)
+			console.log("Error");		
+		if(typeof imgDiv !== 'undefined') {
+		request(imgDiv.attribs.src).pipe(fs.createWriteStream(filename)).on('close', callback);}
+		else{
+			id++;
+			request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+		}		
+	}); 
 };
 
-download(baseURI+year+'_'+id+'.jpg', savePath+id+'.jpg', function(){
-  console.log('done');
-});
+//Main Function
+console.log("Downloading . . .");
+
+// Loop function to create a recursive effect
+(function loop(){
+	download(baseURI+year+'/'+id+'/wallpaper/', savePath+id+'.jpg', 
+	function(){
+		console.log(((id/365)*100).toFixed(2)+'% completed');
+		if(id == 330) 
+			year = "2014";
+		if(id <= 365){
+			id=id+1;
+			loop();
+		}
+		});
+})(1)
