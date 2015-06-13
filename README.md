@@ -1,6 +1,12 @@
 facets-downloader
 =========
 
-To download all 365 facets.la images, simply run:
+##Instructions
+
+1. Download Node.js
+2. Install request and cherio modules
+2. Run 	node facets-downloader.js LOCAL_SAVE_PATH_HERE
+
+
 	
-	node facets-downloader.js LOCAL_SAVE_PATH_HERE
+
