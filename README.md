@@ -3,7 +3,7 @@ facets-downloader
 
 ##Instructions
 
-<b>1.Download Node.js<b><br>
+<b>1.Download Node.js</b><br>
 
 > https://nodejs.org/download/
 
