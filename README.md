@@ -1,12 +1,12 @@
 facets-downloader
 =========
-> Basic introduction for Configuring Raspberry Pi
+
 ##Instructions
 
 1. Download Node.js<br>
-```
-https://nodejs.org/download/
-```
+
+> https://nodejs.org/download/
+
 2. Install request and cheerio modules<br>
 ```
 npm install request cheerio
