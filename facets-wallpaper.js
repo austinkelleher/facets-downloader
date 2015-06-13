@@ -1,31 +1,35 @@
-var cheerio = require('cheerio'),
-	request = require('request'),
-	fs = require('fs');
+var fs = require('fs'),
+    request = require('request'),
+	async = require("async");
 
+var baseURI =  'http://www.facets.la/wallpaper/W_';
+var year = 2013;
+var id = 1;
 var savePath = process.argv[2];
-
-if(typeof savePath === 'undefined') {
-	console.log("Error: Save path not defined.");
-	return;
-}
-
-var year = "2013";
-var baseUri = 'http://www.facets.la/';
-
-(function getImg(id) {
-	var uri = baseUri + year + '/' + id + '/wallpaper/';
-
-	request({ uri: uri }, function(error, response, body) {
-		var $ = cheerio.load(body);
-		var imgDiv = $('#facet-wallpaper').children()['0'];
-
-		if(typeof imgDiv !== 'undefined') {
-			request(imgDiv.attribs.src).pipe(fs.createWriteStream(savePath + id + '.jpg'));
-		}
-	});
-
+	
+var download = function(uri, savePath, callback){
 	if(id == 330) 
 		year = "2014";
-	if(id <= 365)
-		getImg(id+1);
-})(1);
+  request.head(uri, function(err, res, body){
+	console.log('Downloading '+id);
+    //console.log('content-type:', res.headers['content-type']);
+    console.log('content-length:', res.headers['content-length']);
+	if(typeof res.headers['content-length'] !== "undefined"){
+    request(uri).pipe(fs.createWriteStream(savePath)).on('close', callback);
+	if(id++ <= 365){
+		download(baseURI+year+'_'+id+'.jpg', savePath+id+'.jpg', function(){
+		//console.log('done');
+		});}
+	}
+	else{
+		if(id++ <= 365){
+		download(baseURI+year+'_'+id+'.jpg', savePath+id+'.jpg', function(){
+		//console.log('done');
+		});}
+		}
+  });
+};
+
+download(baseURI+year+'_'+id+'.jpg', savePath+id+'.jpg', function(){
+  console.log('done');
+});
