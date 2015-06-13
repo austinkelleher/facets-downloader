@@ -13,9 +13,11 @@ Install request and cheerio modules<br>
 
 Run <br>	
 
-> node facets-downloader.js LOCAL_SAVE_PATH_HERE<br>
+> node facets-downloader.js LOCAL_SAVE_PATH_HERE
+
 [Downloads all the facets in 800x800 resolution]
 
-> node facets-wallpaper.js LOCAL_SAVE_PATH_HERE<br>
+> node facets-wallpaper.js LOCAL_SAVE_PATH_HERE
+
 [Downloads all the facets in 2560x1440 resolution]
 
