@@ -6,11 +6,12 @@
     		"email": "a@alk.im"
   	},
   	"keywords": [
-		"facet"
+		"facet",
+		"image",
+		"download"
 	],
 	"dependencies": {
 		"cheerio": "0.18",
 		"request": "2.51.0"
 	}
 }
-

@@ -1,58 +1,85 @@
 //Required modules
 var fs = require('fs'),
-		 cheerio = require('cheerio'),
-		 request = require('request');
+	cheerio = require('cheerio'),
+	request = require('request');
 
-//Default Variables
-var baseURI =  'http://www.facets.la/';
+var BASE_URI =  'http://www.facets.la/';
 var year = 2013;
 var id = 1;
-var savePath = process.argv[2];	
+
+/**
+* Local save path on your machine
+*/
+var savePath = process.argv[2];
+/**
+* Default is a standard sized facets.la image. If you specific the 'wallpaper'
+* command line argument, it will download all facets.la wallpaper images
+*/
 var type = process.argv[3];
 
-if(typeof savePath === 'undefined') {
-	console.log("Error: Save path not defined.");
-	return;
+if(!savePath) {
+	return console.log("Error: Save path not defined.");
 }
 
-//Download Function
-var download = function(uri, filename, callback){	
-	request({ uri: uri }, function(err, res, body){    
+/**
+* Downloads a specific facets image based on:
+* @var uri The facets.la uri provided
+* @var savePath Local save path on your machine
+* @var callback
+*/
+var download = function(options, callback) {
+	var uri = options.uri;
+	var savePath = options.savePath;
+	var imgDiv = options.imgDiv;
+
+	request({ uri: uri }, function(err, res, body) {
 		var $ = cheerio.load(body);
-		var imgDiv = $(wDiv).children()['0'];				
-		if(typeof imgDiv !== 'undefined') {
-		request(imgDiv.attribs.src).pipe(fs.createWriteStream(filename)).on('close', callback);}
-		else{
-			id++;
-			request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
-		}		
-	}); 
+		var requestImgDiv = $(imgDiv).children()['0'];
+		if(typeof requestImgDiv !== 'undefined') {
+			request(requestImgDiv.attribs.src).pipe(fs.createWriteStream(savePath)).on('close', callback);
+		}
+		id++;
+	});
 };
 
-//Main Function
 console.log("Downloading . . .");
-function main(){
-	if(type == 'w'){
-		wdUrl = baseURI + year +'/' + id + '/wallpaper/';
-		wDiv  = '#facet-wallpaper';		
-		}
-	else{
-		wdUrl = baseURI + year + '/' + id + '/';
-		wDiv  = '#facet-image';
-		}
+
+/**
+* @return object with info regarding the download
+*/
+function getDownloadInfo() {
+	var imgUrl = BASE_URI + year + '/' + id + '/';
+	var imgDiv;
+
+	if(type === 'wallpaper') {
+		imgUrl += '/wallpaper/';
+		imgDiv  = '#facet-wallpaper';
+	} else {
+		imgDiv  = '#facet-image';
+	}
+
+	return {
+		imgDiv: imgDiv,
+		imgUrl: imgUrl
+	};
 }
 
 // Loop function to create a recursive effect
 (function loop(){
-	main();
-	download(wdUrl, savePath+id+'.jpg', 
-	function(){
+	var downloadInfo = getDownloadInfo();
+
+	download({
+		uri: downloadInfo.imgUrl,
+		savePath: savePath+id+'.jpg',
+		imgDiv: downloadInfo.imgDiv
+	}, function(){
 		console.log(((id/365)*100).toFixed(2)+'% completed');
-		if(id == 330) 
+		if(id === 330) {
 			year = "2014";
+		}
+
 		if(id < 365){
-			id=id+1;
 			loop();
 		}
-		});
-})(1)
+	});
+})(1);

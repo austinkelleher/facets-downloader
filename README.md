@@ -1,23 +1,34 @@
 facets-downloader
 =========
 
-##Instructions
+##About
 
-<b>1.Download Node.js</b><br>
+facets-downloader is a simple Node.js script that will download all [facets.la]('http://facets.la/') images to a specified folder on your local machine. You can specify command line arguments for the local save path you desire as well as standard or high resolution. See the instructions below for additional information.
+
+##Prerequisites
+
+###1. Download Node.js
 
 > https://nodejs.org/download/
 
-<b>2.Install request and cheerio modules</b><br>
+###2. Install the project dependencies
 
-> npm install request cheerio
-
-<b>3.Run</b> <br>	
-
-> node facets-downloader.js LOCAL_SAVE_PATH_HERE
+```bash
+cd /path/to/facets-downloader
+npm install
+```
+##Running
 
 [Downloads all the facets in 800x800 resolution]
 
-> node facets-downloader.js LOCAL_SAVE_PATH_HERE w
+```bash
+cd /path/to/facets-downloader
+node facets-downloader.js LOCAL_SAVE_PATH_HERE
+```
 
 [Downloads all the facets in 2560x1440 resolution]
 
+```bash
+cd /path/to/facets-downloader
+node facets-downloader.js LOCAL_SAVE_PATH_HERE wallpaper
+```
