@@ -17,7 +17,7 @@ facets-downloader
 
 [Downloads all the facets in 800x800 resolution]
 
-> node facets-wallpaper.js LOCAL_SAVE_PATH_HERE
+> node facets-downloader.js LOCAL_SAVE_PATH_HERE w
 
 [Downloads all the facets in 2560x1440 resolution]
 
