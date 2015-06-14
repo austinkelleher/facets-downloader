@@ -35,10 +35,12 @@ var download = function(options, callback) {
 	request({ uri: uri }, function(err, res, body) {
 		var $ = cheerio.load(body);
 		var requestImgDiv = $(imgDiv).children()['0'];
+
+		id++;
+
 		if(typeof requestImgDiv !== 'undefined') {
 			request(requestImgDiv.attribs.src).pipe(fs.createWriteStream(savePath)).on('close', callback);
 		} else {
-			id++;
 			callback();
 		}
 	});
