@@ -15,7 +15,7 @@ var savePath = process.argv[2];
 * Default is a standard sized facets.la image. If you specific the 'wallpaper'
 * command line argument, it will download all facets.la wallpaper images
 */
-var type = process.argv[3];
+var downloadType = process.argv[3];
 
 if(!savePath) {
 	return console.log("Error: Save path not defined.");
@@ -45,41 +45,37 @@ var download = function(options, callback) {
 console.log("Downloading . . .");
 
 /**
-* @return object with info regarding the download
+* Sets the variabless needed for the download process to begin, and executes
+* the download process
 */
-function getDownloadInfo() {
-	var imgUrl = BASE_URI + year + '/' + id + '/';
+function initDownloadFacet() {
+	var imgUri = BASE_URI + year + '/' + id + '/';
 	var imgDiv;
 
-	if(type === 'wallpaper') {
-		imgUrl += '/wallpaper/';
+	if(downloadType === 'wallpaper') {
+		imgUri += '/wallpaper/';
 		imgDiv  = '#facet-wallpaper';
 	} else {
 		imgDiv  = '#facet-image';
 	}
 
-	return {
-		imgDiv: imgDiv,
-		imgUrl: imgUrl
-	};
-}
-
-// Loop function to create a recursive effect
-(function loop(){
-	var downloadInfo = getDownloadInfo();
-
 	download({
-		uri: downloadInfo.imgUrl,
+		uri: imgUri,
 		savePath: savePath+id+'.jpg',
-		imgDiv: downloadInfo.imgDiv
-	}, function(){
+		imgDiv: imgDiv
+	}, function() {
 		console.log(((id/365)*100).toFixed(2)+'% completed');
+
+		//Id 330 is when the facets.la images turn from 2013 to 2014 in the url
 		if(id === 330) {
 			year = "2014";
 		}
 
 		if(id < 365){
-			loop();
+			initDownloadFacet();
 		}
 	});
-})(1);
+}
+
+
+initDownloadFacet();
