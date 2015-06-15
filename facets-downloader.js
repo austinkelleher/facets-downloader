@@ -38,7 +38,7 @@ var download = function(options, callback) {
 
 		id++;
 
-		if(typeof requestImgDiv !== 'undefined') {
+		if(typeof requestImgDiv !== 'undefined' && requestImgDiv.attribs.src.indexOf('jpg') !== -1) {
 			request(requestImgDiv.attribs.src).pipe(fs.createWriteStream(savePath)).on('close', callback);
 		} else {
 			callback();
