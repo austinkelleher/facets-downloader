@@ -1,17 +1,31 @@
 {
-	"name": "facets-downloader",
-	"description": "Downloads all 365 facet.la images",
-  	"author": {
-    		"name": "Austin Kelleher",
-    		"email": "a@alk.im"
-  	},
-  	"keywords": [
-		"facet",
-		"image",
-		"download"
-	],
-	"dependencies": {
-		"cheerio": "0.18",
-		"request": "2.51.0"
-	}
+  "name": "facets-downloader",
+  "version": "1.0.0",
+  "description": "Downloads all 365 facets.la images",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "facets-downloader": "bin/facets-downloader"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/austinkelleher/facets-downloader.git"
+  },
+  "keywords": [
+    "facet",
+    "image",
+    "download"
+  ],
+  "author": "Austin Kelleher, a@alk.im",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/austinkelleher/facets-downloader/issues"
+  },
+  "homepage": "https://github.com/austinkelleher/facets-downloader#readme",
+  "dependencies": {
+    "argly": "^1.0.0",
+    "cheerio": "^0.20.0"
+  }
 }
